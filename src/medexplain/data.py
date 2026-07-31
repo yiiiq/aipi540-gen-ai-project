@@ -45,15 +45,15 @@ def default_examples() -> list[RewriteExample]:
 
     return [
         RewriteExample(
-            source_text="Take this medication BID with meals and monitor for adverse gastrointestinal effects.",
-            target_text="Take this medicine twice a day with food. Call your care team if you have stomach pain, nausea, vomiting, or diarrhea.",
+            source_text="A disrupted ossicular chain may be repaired during tympanoplasty as well.",
+            target_text="If the ossicles have been damaged, they may be repaired at the same time.",
         ),
         RewriteExample(
-            source_text="The imaging study shows no acute cardiopulmonary abnormality.",
-            target_text="Your scan does not show a new serious problem with your heart or lungs.",
+            source_text="Abdominal pain (usually starting in one quadrant and spreading to the whole abdomen) occurs in about 95 % of patients and can vary in severity with each attack.",
+            target_text="The pain usually starts in one part of the abdomen, then spreads throughout the entire abdomen. The severity of the pain may vary with each attack.",
         ),
         RewriteExample(
-            source_text="Use the inhaler PRN for dyspnea or wheezing.",
-            target_text="Use the inhaler when needed for shortness of breath or wheezing. Ask your care team how often it is safe to use.",
+            source_text="About 50 % of patients report constitutional symptoms such as fever, malaise, night sweats, weight loss, fatigue, and/or arthralgias.",
+            target_text="Sometimes the disorder begins with fever, muscle and joint aches, loss of appetite, weight loss, and night sweats.",
         ),
     ]

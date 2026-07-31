@@ -10,10 +10,13 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_DIR = PROJECT_ROOT / "data"
 RAW_DATA_PATH = DATA_DIR / "raw" / "medical_rewrites_seed.csv"
+MEDEASI_RAW_PATH = DATA_DIR / "raw" / "med_easi_train.csv"
+HF_CACHE_DIR = DATA_DIR / "raw" / "hf_cache"
 PROCESSED_DATA_PATH = DATA_DIR / "processed" / "medical_rewrites_train.csv"
 OUTPUT_DIR = DATA_DIR / "outputs"
 DEFAULT_MODEL_NAME = "google/flan-t5-small"
 DEFAULT_ADAPTER_DIR = PROJECT_ROOT / "models" / "medexplain-lora"
+MEDEASI_DATASET_NAME = "cbasu/Med-EASi"
 
 
 @dataclass(frozen=True)
