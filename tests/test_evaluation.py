@@ -6,7 +6,14 @@ from medexplain.evaluation import count_jargon, evaluate_rewrite, flesch_reading
 def test_jargon_count_detects_known_terms() -> None:
     """Known medical jargon should be counted."""
 
-    assert count_jargon("Hypertension with elevated glycemic markers.") == 3
+    assert count_jargon("Assessment consistent with STEMI. Cardiology consulted for emergent PCI.") == 2
+
+
+def test_jargon_count_detects_medical_phrases() -> None:
+    """Multi-word clinical phrases should be counted."""
+
+    text = "The patient has pitting edema and bibasilar crackles."
+    assert count_jargon(text) == 2
 
 
 def test_evaluate_rewrite_returns_metrics() -> None:

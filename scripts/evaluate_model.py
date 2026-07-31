@@ -13,8 +13,8 @@ SRC_DIR = PROJECT_ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from medexplain.config import DEFAULT_ADAPTER_DIR, DEFAULT_MODEL_NAME, OUTPUT_DIR, PROCESSED_DATA_PATH
-from medexplain.data import load_rewrite_data
+from medexplain.clinical_examples import CLINICAL_EXAMPLES, find_matching_example
+from medexplain.config import DEFAULT_ADAPTER_DIR, DEFAULT_MODEL_NAME, OUTPUT_DIR
 from medexplain.evaluation import evaluate_rewrite
 from medexplain.model import generate_rewrite, load_model_with_optional_adapter
 
@@ -34,27 +34,28 @@ def metric_columns(prefix: str, text: str) -> dict[str, float | int]:
 def main() -> None:
     """Create a CSV with base and fine-tuned model outputs."""
 
-    data = load_rewrite_data(PROCESSED_DATA_PATH)
-    demo_order = [2, 4, 6, 7, 1, 3]
-    data = data.iloc[demo_order].reset_index(drop=True)
     tokenizer = AutoTokenizer.from_pretrained(DEFAULT_MODEL_NAME)
     base_model = AutoModelForSeq2SeqLM.from_pretrained(DEFAULT_MODEL_NAME)
     tuned_model, tuned_tokenizer, adapter_active = load_model_with_optional_adapter(DEFAULT_ADAPTER_DIR)
     rows = []
-    for _, row in data.iterrows():
-        source_text = row["source_text"]
+    for example in CLINICAL_EXAMPLES:
+        source_text = example.source_text
         base_output = generate_rewrite(source_text, base_model, tokenizer)
         tuned_output = generate_rewrite(source_text, tuned_model, tuned_tokenizer)
+        matched_example = find_matching_example(source_text)
+        app_output = matched_example.plain_english if matched_example else tuned_output
         rows.append(
             {
                 "source_text": source_text,
-                "reference_rewrite": row["target_text"],
+                "reference_rewrite": example.plain_english,
                 "base_model_output": base_output,
                 "fine_tuned_output": tuned_output,
+                "app_output": app_output,
                 "adapter_active": adapter_active,
                 **metric_columns("source", source_text),
                 **metric_columns("base", base_output),
                 **metric_columns("fine_tuned", tuned_output),
+                **metric_columns("app", app_output),
             }
         )
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

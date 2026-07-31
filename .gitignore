@@ -20,3 +20,4 @@ models/*
 !models/medexplain-lora/
 !models/medexplain-lora/**
 notebooks/.ipynb_checkpoints/
+/outputs/

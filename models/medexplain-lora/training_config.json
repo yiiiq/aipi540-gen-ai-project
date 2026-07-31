@@ -1,9 +1,9 @@
 {
   "base_model": "google/flan-t5-small",
   "adaptation": "LoRA",
-  "training_examples": 100,
-  "epochs": 40,
-  "learning_rate": 0.001,
+  "training_examples": 1397,
+  "epochs": 5.0,
+  "learning_rate": 0.003,
   "batch_size": 4,
   "target_modules": [
     "q",
