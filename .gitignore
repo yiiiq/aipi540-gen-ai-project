@@ -1,0 +1,16 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.venv/
+venv/
+env/
+.env
+.streamlit/secrets.toml
+data/outputs/*.csv
+data/outputs/*.json
+models/*
+!models/.gitkeep
+!models/README.md
+notebooks/.ipynb_checkpoints/
