@@ -35,7 +35,7 @@ def main() -> None:
     """Create a CSV with base and fine-tuned model outputs."""
 
     data = load_rewrite_data(PROCESSED_DATA_PATH)
-    demo_order = [2, 3, 4, 5, 0, 1]
+    demo_order = [2, 4, 6, 7, 1, 3]
     data = data.iloc[demo_order].reset_index(drop=True)
     tokenizer = AutoTokenizer.from_pretrained(DEFAULT_MODEL_NAME)
     base_model = AutoModelForSeq2SeqLM.from_pretrained(DEFAULT_MODEL_NAME)

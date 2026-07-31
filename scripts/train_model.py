@@ -9,6 +9,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+import argparse
 
 import pandas as pd
 from datasets import Dataset
@@ -30,6 +31,16 @@ if str(SRC_DIR) not in sys.path:
 from medexplain.config import DEFAULT_ADAPTER_DIR, DEFAULT_MODEL_NAME, PROCESSED_DATA_PATH
 from medexplain.data import load_rewrite_data
 from medexplain.prompts import build_rewrite_prompt
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse training options."""
+
+    parser = argparse.ArgumentParser(description="Train the MedExplain LoRA adapter.")
+    parser.add_argument("--epochs", type=float, default=40, help="Number of training epochs.")
+    parser.add_argument("--learning-rate", type=float, default=1e-3, help="Learning rate.")
+    parser.add_argument("--batch-size", type=int, default=4, help="Per-device batch size.")
+    return parser.parse_args()
 
 
 def tokenize_batch(batch: dict, tokenizer: AutoTokenizer) -> dict:
@@ -56,6 +67,7 @@ def build_datasets(data: pd.DataFrame, tokenizer: AutoTokenizer) -> tuple[Datase
 def main() -> None:
     """Train and save a LoRA adapter."""
 
+    args = parse_args()
     data = load_rewrite_data(PROCESSED_DATA_PATH)
     tokenizer = AutoTokenizer.from_pretrained(DEFAULT_MODEL_NAME)
     base_model = AutoModelForSeq2SeqLM.from_pretrained(DEFAULT_MODEL_NAME)
@@ -72,10 +84,10 @@ def main() -> None:
     data_collator = DataCollatorForSeq2Seq(tokenizer=tokenizer, model=model)
     training_args = Seq2SeqTrainingArguments(
         output_dir="data/outputs/training",
-        learning_rate=5e-4,
-        per_device_train_batch_size=4,
-        per_device_eval_batch_size=4,
-        num_train_epochs=80,
+        learning_rate=args.learning_rate,
+        per_device_train_batch_size=args.batch_size,
+        per_device_eval_batch_size=args.batch_size,
+        num_train_epochs=args.epochs,
         weight_decay=0.01,
         eval_strategy="epoch",
         save_strategy="no",
@@ -100,6 +112,9 @@ def main() -> None:
         "base_model": DEFAULT_MODEL_NAME,
         "adaptation": "LoRA",
         "training_examples": len(data),
+        "epochs": args.epochs,
+        "learning_rate": args.learning_rate,
+        "batch_size": args.batch_size,
         "target_modules": ["q", "k", "v", "o", "wi_0", "wi_1", "wo"],
     }
     (DEFAULT_ADAPTER_DIR / "training_config.json").write_text(json.dumps(metadata, indent=2))
