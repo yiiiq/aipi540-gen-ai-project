@@ -78,6 +78,8 @@ The evaluation script creates `data/outputs/before_after_examples.csv` with:
 
 This gives the pitch a simple before/after table and supports discussion of the learned capability.
 
+Because this is a very small educational fine-tuning run, the model can still hallucinate or mix concepts. In the pitch, use the strongest rows as evidence of the learned rewrite style, and use weaker rows to motivate the safety/reflection section.
+
 ## Rubric Checklist
 
 - Fine-tuned/adapted generative model: `google/flan-t5-small` with LoRA

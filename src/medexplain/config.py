@@ -21,7 +21,7 @@ class GenerationConfig:
     """Settings used for rewrite generation."""
 
     max_new_tokens: int = 128
-    temperature: float = 0.2
+    temperature: float = 0.0
     top_p: float = 0.9
     repetition_penalty: float = 1.1
 

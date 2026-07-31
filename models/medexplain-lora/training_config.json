@@ -1,0 +1,14 @@
+{
+  "base_model": "google/flan-t5-small",
+  "adaptation": "LoRA",
+  "training_examples": 20,
+  "target_modules": [
+    "q",
+    "k",
+    "v",
+    "o",
+    "wi_0",
+    "wi_1",
+    "wo"
+  ]
+}

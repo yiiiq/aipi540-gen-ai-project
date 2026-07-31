@@ -60,26 +60,26 @@ def main() -> None:
     tokenizer = AutoTokenizer.from_pretrained(DEFAULT_MODEL_NAME)
     base_model = AutoModelForSeq2SeqLM.from_pretrained(DEFAULT_MODEL_NAME)
     lora_config = LoraConfig(
-        r=8,
-        lora_alpha=16,
+        r=16,
+        lora_alpha=32,
         lora_dropout=0.05,
         bias="none",
         task_type=TaskType.SEQ_2_SEQ_LM,
-        target_modules=["q", "v"],
+        target_modules=["q", "k", "v", "o", "wi_0", "wi_1", "wo"],
     )
     model = get_peft_model(base_model, lora_config)
     train_dataset, eval_dataset = build_datasets(data, tokenizer)
     data_collator = DataCollatorForSeq2Seq(tokenizer=tokenizer, model=model)
     training_args = Seq2SeqTrainingArguments(
         output_dir="data/outputs/training",
-        learning_rate=2e-4,
+        learning_rate=5e-4,
         per_device_train_batch_size=4,
         per_device_eval_batch_size=4,
-        num_train_epochs=8,
+        num_train_epochs=80,
         weight_decay=0.01,
-        evaluation_strategy="epoch",
-        save_strategy="epoch",
-        logging_steps=5,
+        eval_strategy="epoch",
+        save_strategy="no",
+        logging_steps=20,
         predict_with_generate=True,
         fp16=False,
         report_to="none",
@@ -89,7 +89,7 @@ def main() -> None:
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
-        tokenizer=tokenizer,
+        processing_class=tokenizer,
         data_collator=data_collator,
     )
     trainer.train()
@@ -100,7 +100,7 @@ def main() -> None:
         "base_model": DEFAULT_MODEL_NAME,
         "adaptation": "LoRA",
         "training_examples": len(data),
-        "target_modules": ["q", "v"],
+        "target_modules": ["q", "k", "v", "o", "wi_0", "wi_1", "wo"],
     }
     (DEFAULT_ADAPTER_DIR / "training_config.json").write_text(json.dumps(metadata, indent=2))
     print(f"Saved LoRA adapter to {DEFAULT_ADAPTER_DIR}")
