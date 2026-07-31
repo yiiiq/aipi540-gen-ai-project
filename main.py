@@ -70,7 +70,7 @@ def main() -> None:
     with st.sidebar:
         st.header("Generation")
         max_new_tokens = st.slider("Max new tokens", min_value=40, max_value=220, value=128, step=8)
-        temperature = st.slider("Temperature", min_value=0.0, max_value=1.0, value=0.2, step=0.1)
+        temperature = st.slider("Temperature", min_value=0.0, max_value=1.0, value=0.0, step=0.1)
         st.divider()
         st.header("Safety")
         st.write("This prototype rewrites text for clarity. It does not diagnose, prescribe, or replace a care team.")

@@ -45,15 +45,15 @@ def default_examples() -> list[RewriteExample]:
 
     return [
         RewriteExample(
-            source_text="The patient has hypertension and should reduce sodium intake.",
-            target_text="You have high blood pressure. Eating less salt may help. Ask your care team what daily salt limit is right for you.",
-        ),
-        RewriteExample(
-            source_text="Your hemoglobin A1c is elevated, consistent with suboptimal glycemic control.",
-            target_text="Your average blood sugar has been higher than the goal range. Talk with your care team about your diabetes plan.",
-        ),
-        RewriteExample(
             source_text="Take this medication BID with meals and monitor for adverse gastrointestinal effects.",
             target_text="Take this medicine twice a day with food. Call your care team if you have stomach pain, nausea, vomiting, or diarrhea.",
+        ),
+        RewriteExample(
+            source_text="The imaging study shows no acute cardiopulmonary abnormality.",
+            target_text="Your scan does not show a new serious problem with your heart or lungs.",
+        ),
+        RewriteExample(
+            source_text="Use the inhaler PRN for dyspnea or wheezing.",
+            target_text="Use the inhaler when needed for shortness of breath or wheezing. Ask your care team how often it is safe to use.",
         ),
     ]

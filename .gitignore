@@ -1,6 +1,7 @@
 .DS_Store
 __pycache__/
 *.py[cod]
+*.egg-info/
 .pytest_cache/
 .mypy_cache/
 .venv/
@@ -8,9 +9,13 @@ venv/
 env/
 .env
 .streamlit/secrets.toml
-data/outputs/*.csv
-data/outputs/*.json
+data/outputs/*
+!data/outputs/.gitkeep
+!data/outputs/before_after_examples.csv
+data/outputs/training/
 models/*
 !models/.gitkeep
 !models/README.md
+!models/medexplain-lora/
+!models/medexplain-lora/**
 notebooks/.ipynb_checkpoints/
