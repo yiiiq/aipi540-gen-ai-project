@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from medexplain.clinical_examples import CLINICAL_EXAMPLES
+
 REQUIRED_COLUMNS = ("source_text", "target_text")
 
 
@@ -44,16 +46,6 @@ def default_examples() -> list[RewriteExample]:
     """Return examples for the web app sample selector."""
 
     return [
-        RewriteExample(
-            source_text="A disrupted ossicular chain may be repaired during tympanoplasty as well.",
-            target_text="If the ossicles have been damaged, they may be repaired at the same time.",
-        ),
-        RewriteExample(
-            source_text="Abdominal pain (usually starting in one quadrant and spreading to the whole abdomen) occurs in about 95 % of patients and can vary in severity with each attack.",
-            target_text="The pain usually starts in one part of the abdomen, then spreads throughout the entire abdomen. The severity of the pain may vary with each attack.",
-        ),
-        RewriteExample(
-            source_text="About 50 % of patients report constitutional symptoms such as fever, malaise, night sweats, weight loss, fatigue, and/or arthralgias.",
-            target_text="Sometimes the disorder begins with fever, muscle and joint aches, loss of appetite, weight loss, and night sweats.",
-        ),
+        RewriteExample(source_text=example.source_text, target_text=example.plain_english)
+        for example in CLINICAL_EXAMPLES
     ]

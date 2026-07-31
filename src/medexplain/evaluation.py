@@ -5,27 +5,7 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
-
-JARGON_TERMS = {
-    "adverse",
-    "analgesic",
-    "bid",
-    "contraindication",
-    "dyspnea",
-    "edema",
-    "elevated",
-    "etiology",
-    "gastrointestinal",
-    "glycemic",
-    "hemoglobin",
-    "hypertension",
-    "lesion",
-    "myocardial",
-    "prn",
-    "renal",
-    "suboptimal",
-    "tachycardia",
-}
+from medexplain.clinical_examples import extract_jargon
 
 
 @dataclass(frozen=True)
@@ -76,10 +56,9 @@ def flesch_reading_ease(text: str) -> float:
 
 
 def count_jargon(text: str) -> int:
-    """Count known medical jargon terms in text."""
+    """Count known glossary concepts in text."""
 
-    words = tokenize_words(text)
-    return sum(1 for word in words if word in JARGON_TERMS)
+    return len(extract_jargon(text))
 
 
 def evaluate_rewrite(text: str) -> RewriteMetrics:

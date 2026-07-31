@@ -41,8 +41,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--max-rows",
         type=int,
-        default=100,
-        help="Maximum Med-EASi rows to keep for fast hackathon training. Use 0 for all rows.",
+        default=0,
+        help="Maximum Med-EASi rows to keep. Use 0 for all rows.",
     )
     return parser.parse_args()
 
