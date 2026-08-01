@@ -3,14 +3,14 @@
 from __future__ import annotations
 
 
-SYSTEM_STYLE_RULES = (
-    "Rewrite the medical text for a patient. Use plain language, keep the meaning, "
-    "avoid diagnosis or treatment advice, and mention when the patient should ask "
-    "their care team for clarification."
+REWRITE_INSTRUCTION = (
+    "Simplify the following medical text into plain, patient-friendly language at "
+    "approximately a 6th-8th grade reading level. Preserve all medical facts, "
+    "numbers, and meaning."
 )
 
 
 def build_rewrite_prompt(text: str) -> str:
     """Create the instruction prompt used for training and inference."""
 
-    return f"{SYSTEM_STYLE_RULES}\n\nMedical text: {text.strip()}\n\nPatient-friendly rewrite:"
+    return f"{REWRITE_INSTRUCTION} Input: {text.strip()}\nOutput:"

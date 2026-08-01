@@ -85,8 +85,8 @@ def main() -> None:
     with st.sidebar:
         st.header("Architecture")
         st.write(
-            "Curated glossary explanations make the demo reliable. The fine-tuned LoRA model is shown as "
-            "a draft/comparison layer."
+            "The fine-tuned LoRA model generates the plain-English summary. A deterministic glossary layer "
+            "explains detected medical terms."
         )
         st.divider()
         st.header("Generation")
@@ -98,16 +98,11 @@ def main() -> None:
 
     if st.button("Rewrite", type="primary", disabled=not user_text.strip()):
         config = GenerationConfig(max_new_tokens=max_new_tokens, temperature=temperature)
-        model_output = generate_rewrite(user_text, model, tokenizer, config)
-        matched_example = find_matching_example(user_text)
-        output = matched_example.plain_english if matched_example else model_output
+        output = generate_rewrite(user_text, model, tokenizer, config)
 
         st.subheader("Plain-English Summary")
         st.write(output)
         render_jargon_table(user_text)
-
-        with st.expander("LoRA model draft"):
-            st.write(model_output)
 
         left, right = st.columns(2)
         with left:
@@ -119,8 +114,8 @@ def main() -> None:
     st.subheader("What This Prototype Shows")
     st.write(
         "The fine-tuned adapter is trained on paired examples that map clinical wording to plain language. "
-        "For clinical safety, the live demo uses a deterministic glossary layer for term explanations and "
-        "shows the LoRA output separately as a learned draft."
+        "The demo combines generated simplification with deterministic glossary explanations for important "
+        "medical terms."
     )
 
 
