@@ -14,8 +14,8 @@ MEDEASI_RAW_PATH = DATA_DIR / "raw" / "med_easi_train.csv"
 HF_CACHE_DIR = DATA_DIR / "raw" / "hf_cache"
 PROCESSED_DATA_PATH = DATA_DIR / "processed" / "medical_rewrites_train.csv"
 OUTPUT_DIR = DATA_DIR / "outputs"
-DEFAULT_MODEL_NAME = "google/flan-t5-small"
-DEFAULT_ADAPTER_DIR = PROJECT_ROOT / "models" / "medexplain-lora"
+DEFAULT_MODEL_NAME = "google/flan-t5-base"
+DEFAULT_ADAPTER_DIR = PROJECT_ROOT / "models" / "medexplain-flan-t5-base-lora"
 MEDEASI_DATASET_NAME = "cbasu/Med-EASi"
 
 

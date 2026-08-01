@@ -13,7 +13,7 @@ SRC_DIR = PROJECT_ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from medexplain.clinical_examples import CLINICAL_EXAMPLES, find_matching_example
+from medexplain.clinical_examples import CLINICAL_EXAMPLES
 from medexplain.config import DEFAULT_ADAPTER_DIR, DEFAULT_MODEL_NAME, OUTPUT_DIR
 from medexplain.evaluation import evaluate_rewrite
 from medexplain.model import generate_rewrite, load_model_with_optional_adapter
@@ -42,8 +42,7 @@ def main() -> None:
         source_text = example.source_text
         base_output = generate_rewrite(source_text, base_model, tokenizer)
         tuned_output = generate_rewrite(source_text, tuned_model, tuned_tokenizer)
-        matched_example = find_matching_example(source_text)
-        app_output = matched_example.plain_english if matched_example else tuned_output
+        app_output = tuned_output
         rows.append(
             {
                 "source_text": source_text,

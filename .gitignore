@@ -19,5 +19,7 @@ models/*
 !models/README.md
 !models/medexplain-lora/
 !models/medexplain-lora/**
+!models/medexplain-flan-t5-base-lora/
+!models/medexplain-flan-t5-base-lora/**
 notebooks/.ipynb_checkpoints/
 /outputs/
